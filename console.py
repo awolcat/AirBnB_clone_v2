@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
                 if '"' in k_v[1]:
                     val = k_v[1].replace('"', '').replace('_', ' ')
                     new_dict[k_v[0]] = val
-            
+
                 elif '.' in k_v[1]:
                     new_dict[k_v[0]] = float(k_v[1])
                 else:
@@ -225,11 +225,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
