@@ -45,7 +45,7 @@ class DBStorage():
         if cls:
             result.append(self.__session.query(cls).all())
         else:
-            for cls in [State, City, User]:
+            for cls in [State, City, User, Place]:
                 result.extend(self.__session.query(cls).all())
 
         for obj in result:
