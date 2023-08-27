@@ -14,9 +14,8 @@ class FileStorage:
             return FileStorage.__objects
         else:
             items = {}
-            requested = cls.__name__
             for k, v in FileStorage.__objects.items():
-                if requested in k:
+                if cls in k:
                     items[k] = v
             return items
 
