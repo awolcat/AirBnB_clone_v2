@@ -5,6 +5,7 @@
 from fabric.api import local
 from datetime import datetime
 
+
 def do_pack():
     """This method will create a folder versions
         in the target host containing the contents
@@ -12,11 +13,11 @@ def do_pack():
     """
     time = datetime.now().strftime('%Y%m%d%H%M%S')
     archive_path = f'versions/web_static_{time}.tgz'
-
-    """prepare directory for archive"""
-    local("mkdir -p versions")
-    """create the archive"""
-    result = local(f"tar cf {archive_path} /data/web_static/*")
-    if result.succeeded:
+    try:
+        """prepare directory for archive"""
+        local("mkdir -p versions")
+        """create the archive"""
+        result = local(f"tar cf {archive_path} /data/web_static/*")
         return archive_path
-    return None
+    except Exception:
+        return None
