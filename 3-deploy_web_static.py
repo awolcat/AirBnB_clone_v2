@@ -19,13 +19,13 @@ def do_pack():
         of web_static compressed
     """
     time = datetime.now().strftime('%Y%m%d%H%M%S')
-    archive_path = f'versions/web_static_{time}.tgz'
+    archive_path = 'versions/web_static_{}.tgz'.format(time)
     try:
-        """prepare directory for archive"""
+        # Prepare directory for archive
         local("mkdir -p versions")
-        """create the archive"""
-        result = local(f"tar cvzf {archive_path} web_static/")
-        # return archive_path
+        # Create the archive
+        result = local("tar cvzf {} web_static/".format(archive_path))
+        # Return archive_path
         return 'web_static_{}.tgz'.format(time)
     except Exception:
         return None
