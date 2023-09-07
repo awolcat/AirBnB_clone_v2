@@ -5,7 +5,7 @@
 sudo apt-get update
 sudo apt-get install -y nginx
 
-# Create document directories
+# Create document root/directories
 sudo mkdir -p /data/web_static/shared
 sudo mkdir -p /data/web_static/releases/test
 
