@@ -18,6 +18,6 @@ def do_pack():
         local("mkdir -p versions")
         """create the archive"""
         result = local(f"tar cf {archive_path} /data/web_static/*")
-        return archive_path
+        return f'web_static_{time}.tgz'
     except Exception:
         return None
