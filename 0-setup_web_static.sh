@@ -19,10 +19,10 @@ echo "<html>
 </html>" | sudo tee /data/web_static/releases/test/index.html
 
 # Create symbolic link
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
 # Change owner of document directory hierarchy
-sudo chown -R "$USER":"$USER" /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 # Edit the config file
 
@@ -30,5 +30,3 @@ sudo sed -i '/server_name _;/a \ \tlocation /hbnb_static {\n\t\talias /data/web_
 
 # Restart nginx
 sudo service nginx restart
-
-
