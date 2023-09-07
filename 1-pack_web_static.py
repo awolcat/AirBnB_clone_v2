@@ -11,8 +11,8 @@ def do_pack():
         of web_static compressed
     """
     local("mkdir -p versions")
-    result = local("""tar cf versions/web_static_$(date '+%Y%m%d%H%M%S').tar
-                   /data/web_static/*""")
+    result = local("tar cf versions/web_static_$(date '+%Y%m%d%H%M%S').tar\
+                   /data/web_static/*")
     if (result.succeeded):
         archive = local("ls -t versions/ | head -1")
         return archive.stdout
