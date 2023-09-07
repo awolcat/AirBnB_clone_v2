@@ -28,19 +28,21 @@ def do_deploy(archive_path):
         archive_name = archive_name.split('.')[0]
         # Releases directory
         releases = '/data/web_static/releases'
-        run(f'mkdir -p {releases}/{archive_name}/')
-        with cd(f'{releases}/{archive_name}'):
-            run(f'tar xzf /tmp/{archive_name}.tgz')
+        run('mkdir -p {}/{}/'.format(releases, archive_name))
+        with cd('{}/{}'.format(releases, archive_name)):
+            run('tar xzf /tmp/{}.tgz'.format(archive_name))
         # Delete archive from /tmp/
-        run(f'rm /tmp/{archive_name}.tgz')
+        run('rm /tmp/{}.tgz'.format(archive_name))
         # Move webstatic file up one level in dir hierarchy
         ws = 'web_static'
-        run(f'mv {releases}/{archive_name}/{ws}/* {releases}/{archive_name}/')
-        run(f'rm -rf {releases}/{archive_name}/{ws}')
+        run(f'mv {}/{}/{}/* {}/{}/'.format(releases, archive_name,
+                                           ws, releases, archive_name))
+        run(f'rm -rf {}/{}/{}'.format(releases, archive_name, ws))
         # Remove symbolic link current
         run('rm -rf /data/web_static/current')
         # Create another symbolic link current to releases/archive_name
-        run(f'ln -s {releases}/{archive_name}/ /data/web_static/current')
+        run(f'ln -s {}/{}/ /data/web_static/current'.format(releases,
+                                                            archive_name))
         return True
     except Exception:
         return False
