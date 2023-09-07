@@ -2,7 +2,7 @@
 """This module defines a fabfile which  generates a .tgz archive
    from the contents of the web_static folder of the AirBnB Clone
 """
-from fabric.api import *
+from fabric.api import put, run, env 
 import os
 
 
@@ -16,33 +16,30 @@ def do_deploy(archive_path):
         and uncompress it and configure nginx to serve the sites there
     """
 
-    # env.user = '29cd00e4710d'
-    # env.password = 'c1ba88a1165047614b78'
-    # env.hosts = ['29cd00e4710d.fddba5f9.alx-cod.online']
-
     if os.path.exists(archive_path) is False:
         return False
     try:
         put(archive_path, '/tmp/')
-        archive_name = archive_path.split('/')[-1]
-        archive_name = archive_name.split('.')[0]
+        archive = archive_path.split('/')[-1]
+        archive_name = archive.split('.')[0]
         # Releases directory
         releases = '/data/web_static/releases'
-        run('mkdir -p {}/{}/'.format(releases, archive_name))
-        with cd('{}/{}'.format(releases, archive_name)):
-            run('tar xzf /tmp/{}.tgz'.format(archive_name))
+        run('sudo mkdir -p {}/{}/'.format(releases, archive_name))
+        run('sudo tar -xzf /tmp/{}.tgz -C {}/{}'.format(archive_name,
+                                                        releases,
+                                                        archive_name))
         # Delete archive from /tmp/
-        run('rm /tmp/{}.tgz'.format(archive_name))
+        run('sudo rm /tmp/{}.tgz'.format(archive_name))
         # Move webstatic file up one level in dir hierarchy
         ws = 'web_static'
-        run(f'mv {}/{}/{}/* {}/{}/'.format(releases, archive_name,
-                                           ws, releases, archive_name))
-        run(f'rm -rf {}/{}/{}'.format(releases, archive_name, ws))
+        run('sudo mv {}/{}/{}/* {}/{}/'.format(releases, archive_name, ws,
+                                               releases, archive_name))
+        run('sudo rm -rf {}/{}/{}'.format(releases, archive_name, ws))
         # Remove symbolic link current
-        run('rm -rf /data/web_static/current')
+        run('sudo rm -rf /data/web_static/current')
         # Create another symbolic link current to releases/archive_name
-        run(f'ln -s {}/{}/ /data/web_static/current'.format(releases,
-                                                            archive_name))
+        run('sudo ln -s {}/{}/ /data/web_static/current'.format(releases,
+                                                                archive_name))
         return True
     except Exception:
         return False
