@@ -19,7 +19,7 @@ echo "<html>
 </html>" | sudo tee /data/web_static/releases/test/index.html
 
 # Create symbolic link
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current/
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # Change owner of document directory hierarchy
 sudo chown -R "$USER":"$USER" /data/
