@@ -16,7 +16,7 @@ def do_deploy(archive_path):
         and uncompress it and configure nginx to serve the sites there
     """
 
-    if os.path.exists(archive_path) is False:
+    if os.path.isfile(archive_path) is False:
         return False
     try:
         put(archive_path, '/tmp/')
@@ -33,13 +33,13 @@ def do_deploy(archive_path):
         # Move webstatic file up one level in dir hierarchy
         ws = 'web_static'
         run('sudo cp -r {}/{}/{}/* {}/{}/'.format(releases, archive_name, ws,
-                                               releases, archive_name))
+                                                  releases, archive_name))
         run('sudo rm -rf {}/{}/{}'.format(releases, archive_name, ws))
         # Remove symbolic link current
         run('sudo rm -rf /data/web_static/current')
         # Create another symbolic link current to releases/archive_name
         run('sudo ln -sf {}/{}/ /data/web_static/current'.format(releases,
-                                                                archive_name))
+                                                                 archive_name))
         return True
     except Exception:
         return False
