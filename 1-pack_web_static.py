@@ -14,6 +14,6 @@ def do_pack():
     result = local("tar cf versions/web_static_$(date '+%Y%m%d%H%M%S').tgz\
                    /data/web_static/*")
     if (result.succeeded):
-        archive = local("ls -t versions/ | head -1")
+        archive = local("ls -t versions/web_static_* | head -1")
         return archive.stdout
     return None
