@@ -2,7 +2,7 @@
 """This module defines a fabfile which  generates a .tgz archive
    from the contents of the web_static folder of the AirBnB Clone
 """
-from fabric.api import put, run, env 
+from fabric.api import put, run, env
 import os
 
 
