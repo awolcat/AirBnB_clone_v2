@@ -36,7 +36,7 @@ def do_deploy(archive_path):
         and uncompress it and configure nginx to serve the sites there
     """
 
-    if os.path.isfile(archive_path) is False:
+    if archive_path is None or os.path.isfile(archive_path) is False:
         return False
     try:
         put(archive_path, '/tmp/')
@@ -44,7 +44,7 @@ def do_deploy(archive_path):
         archive_name = archive.split('.')[0]
         # Releases directory
         releases = '/data/web_static/releases'
-        run('sudo mkdir -p {}/{}/'.format(releases, archive_name))
+        run('sudo mkdir -p {}/{}'.format(releases, archive_name))
         run('sudo tar -xzf /tmp/{}.tgz -C {}/{}'.format(archive_name,
                                                         releases,
                                                         archive_name))
@@ -56,9 +56,9 @@ def do_deploy(archive_path):
                                                   releases, archive_name))
         run('sudo rm -rf {}/{}/{}'.format(releases, archive_name, ws))
         # Remove symbolic link current
-        run('sudo rm -rf /data/web_static/current')
+        run('sudo rm -f /data/web_static/current')
         # Create another symbolic link current to releases/archive_name
-        run('sudo ln -sf {}/{}/ /data/web_static/current'.format(releases,
+        run('sudo ln -s {}/{}/ /data/web_static/current'.format(releases,
                                                                  archive_name))
         return True
     except Exception:
