@@ -27,7 +27,7 @@ def do_pack():
 
 
 env.user = 'ubuntu'
-env.hosts = ['100.26.234.115', '52.91.132.168']
+env.hosts = ['100.26.234.115', '52.91.132.168', 'localhost']
 env.key_filename = '~/.ssh/school'
 
 
@@ -59,7 +59,7 @@ def do_deploy(archive_path):
         run('sudo rm -f /data/web_static/current')
         # Create another symbolic link current to releases/archive_name
         run('sudo ln -s {}/{}/ /data/web_static/current'.format(releases,
-                                                                 archive_name))
+                                                                archive_name))
         return True
     except Exception:
         return False
