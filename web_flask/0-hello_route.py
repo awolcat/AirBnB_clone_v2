@@ -4,8 +4,8 @@
     This module defines the simplest flask app possible
 """
 from flask import Flask
-
 app = Flask(__name__)
+
 
 @app.route('/', strict_slashes=False)
 def hello_route():
@@ -13,5 +13,6 @@ def hello_route():
         to a http request for the root of our website
     """
     return "Hello HBNB!"
+
 
 app.run(host='0.0.0.0', port=5000)
