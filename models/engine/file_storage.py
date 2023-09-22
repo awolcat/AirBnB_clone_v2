@@ -14,6 +14,8 @@ class FileStorage:
             return FileStorage.__objects
         else:
             items = {}
+            if isinstance(cls, str) is False:
+                cls = cls.__name__
             for k, v in FileStorage.__objects.items():
                 if cls in k:
                     items[k] = v
@@ -52,7 +54,7 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
@@ -61,3 +63,8 @@ class FileStorage:
         if obj is not None:
             key = f'{obj.__class__.__name__}.{obj.id}'
             del FileStorage.__objects[key]
+
+    def close(self):
+        """Close method to avoid conflict with db_storage close?
+        """
+        self.reload()

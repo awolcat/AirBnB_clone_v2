@@ -21,7 +21,6 @@ class DBStorage():
     __engine = None
     __session = None
 
-
     def __init__(self):
         """ This method initializes the ORM engine """
         self.__engine = create_engine(URL, pool_pre_ping=True)
@@ -43,7 +42,7 @@ class DBStorage():
         result = []
         objects = {}
         if cls:
-            result.append(self.__session.query(cls).all())
+            result.extend(self.__session.query(cls).all())
         else:
             for cls in [State, City, User, Place, Review, Amenity]:
                 result.extend(self.__session.query(cls).all())
@@ -81,8 +80,15 @@ class DBStorage():
         from models.review import Review
         from models.state import State
 
-
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(session_factory)
-        self.__session = Session()
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
+        make_session = scoped_session(session_factory)
+        self.__session = make_session()
+
+    def close(self):
+        """Close and reopen the session
+            to enable access to data added
+            to the db outside the session
+        """
+        self.__session.close()
