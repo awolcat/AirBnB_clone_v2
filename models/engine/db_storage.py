@@ -82,7 +82,7 @@ class DBStorage():
 
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=True)
+                                       expire_on_commit=False)
         make_session = scoped_session(session_factory)
         self.__session = make_session()
 
@@ -91,4 +91,5 @@ class DBStorage():
             to enable access to data added
             to the db outside the session
         """
-        self.__session.close()
+        # self.__session.close()
+        print(self.__class__)
