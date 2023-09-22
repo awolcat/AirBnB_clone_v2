@@ -91,5 +91,4 @@ class DBStorage():
             to enable access to data added
             to the db outside the session
         """
-        # self.__session.close()
-        print(self.__class__)
+        self.__session.close()

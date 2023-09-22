@@ -14,8 +14,8 @@ class FileStorage:
             return FileStorage.__objects
         else:
             items = {}
-            if isinstance(cls, str) is False:
-                cls = cls.__name__
+            # if isinstance(cls, str) is False:
+            cls = cls.__name__
             for k, v in FileStorage.__objects.items():
                 if cls in k:
                     items[k] = v
