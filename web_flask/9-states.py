@@ -13,7 +13,7 @@ app = Flask(__name__)
 def all_states():
     """This method/route returns all states"""
     states = storage.all(State)
-    return render_template('9-states.html', state=states, mode='all')
+    return render_template('9-states.html', states=states, mode='all')
 
 
 @app.route('/states/<id>', strict_slashes=False)
@@ -26,7 +26,7 @@ def play_with_states(id):
     for state in states.values():
         if state.id == id:
             return render_template('9-states.html', state=state, mode='id')
-    return render_template('9-states.html', state=states, mode='none')
+    return render_template('9-states.html', states=states, mode='none')
 
 
 @app.teardown_appcontext
