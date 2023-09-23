@@ -29,5 +29,14 @@ def play_with_states(id):
     return render_template('9-states.html', state=states, mode='none')
 
 
+@app.teardown_appcontext
+def release_connection(error):
+    """This function releases the current connection
+        after a request.
+        Session will persist
+    """
+    storage.close()
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
