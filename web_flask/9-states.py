@@ -10,6 +10,12 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
+def all_states():
+    """This method/route returns all states"""
+    states = storage.all(State)
+    return render_template('9-states.html', state=states, mode='all')
+
+
 @app.route('/states/<id>', strict_slashes=False)
 def play_with_states(id=None):
     """This method will display all states
@@ -17,7 +23,10 @@ def play_with_states(id=None):
         together with its associated cities
     """
     states = storage.all(State)
-    return render_template('9-states.html', states=states, id=id)
+    for state in states.values():
+        if state.id == id:
+            return render_template('9-states.html', state=state, mode='id')
+    return render_template('9-states.html', state=states, mode='none')
 
 
 if __name__ == '__main__':
