@@ -17,7 +17,7 @@ def all_states():
 
 
 @app.route('/states/<id>', strict_slashes=False)
-def play_with_states(id=None):
+def play_with_states(id):
     """This method will display all states
         or a specific state given a valid state id
         together with its associated cities
