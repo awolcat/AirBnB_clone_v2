@@ -4,13 +4,13 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
-
+from sqlalchemy.dialects.mysql import dialect
 
 User = os.getenv('HBNB_MYSQL_USER')
 Pass = os.getenv('HBNB_MYSQL_PWD')
 Host = os.getenv('HBNB_MYSQL_HOST')
 DBname = os.getenv('HBNB_MYSQL_DB')
-URL = f'mysql+mysqldb://{User}:{Pass}@{Host}/{DBname}'
+URL = f'mysql+mysqldb://{User}:{Pass}@{Host}/{DBname}?charset=latin1'
 
 
 class DBStorage():
@@ -24,6 +24,13 @@ class DBStorage():
     def __init__(self):
         """ This method initializes the ORM engine """
         self.__engine = create_engine(URL, pool_pre_ping=True)
+        """
+        dialect.create_connect_args = (lambda url: [],
+                {
+                    'init_command': 'SET storage_engine=InnoDB',
+                }
+        )
+        """
         if (os.getenv('HBNB_ENV') == 'test'):
             Base.metadata.drop_all(self.__engine)
 
