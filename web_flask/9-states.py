@@ -25,7 +25,7 @@ def play_with_states(id):
     states = storage.all(State)
     for state in states.values():
         if state.id == id:
-            return render_template('9-states.html', state=state, mode='id')
+            return render_template('9-states.html', states=state, mode='id')
     return render_template('9-states.html', states=states, mode='none')
 
 
